@@ -46,7 +46,7 @@ program:
           </head>
           <body>
           <h1>Hello CNCF Demo Audience!</h1>
-          <a href="Click Me!"> "Click Me!" </a>
+          <a href="http://bucket-b287830.s3-website.eu-central-1.amazonaws.com/"> "Click Me!" </a>
           </body>
           </html>
         contentType: text/html
