@@ -41,14 +41,14 @@ program:
         bucket: ${bucket.id}
         content: |
           <html>
-<head>
-<title>Hello CNCF Demo Audience!</title>
-</head>
-<body>
-<h1>Hello CNCF Demo Audience!</h1>
-<a href="Click Me!"> "Click Me!" </a>
-</body>
-</html>
+          <head>
+          <title>Hello CNCF Demo Audience!</title>
+          </head>
+          <body>
+          <h1>Hello CNCF Demo Audience!</h1>
+          <a href="Click Me!"> "Click Me!" </a>
+          </body>
+          </html>
         contentType: text/html
         acl: public-read
   outputs:
