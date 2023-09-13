@@ -1,0 +1,13 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: test
+  description: Stack for test
+  annotations:
+    pulumi.com/project-slug: dirien/test/dev
+spec:
+  owner: infrastructure
+  domain: gitops-platform
+  type: service
+  lifecycle: experimental
+  system: gitops-system
