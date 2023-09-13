@@ -1,0 +1,32 @@
+apiVersion: pulumi.com/v1
+kind: Program
+metadata:
+  name: test
+program:
+  resources:
+    bucket:
+      type: aws:s3:Bucket
+      properties:
+        website:
+          indexDocument: index.html
+    index.html:
+      type: aws:s3:BucketObject
+      properties:
+        bucket: ${bucket.id}
+        content: <h1>Hello Engin</h1>
+        contentType: text/html
+        acl: public-read
+  outputs:
+    url: http://${bucket.websiteEndpoint}
+---
+apiVersion: pulumi.com/v1
+kind: Stack
+metadata:
+  name: staticwebsite
+spec:
+  stack: 
+  programRef:
+    name: test
+  destroyOnFinalize: true
+  config:
+    aws:region: eu-central-1
