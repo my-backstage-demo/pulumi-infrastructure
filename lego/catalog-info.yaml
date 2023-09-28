@@ -1,0 +1,13 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: lego
+  description: Stack for lego
+  annotations:
+    pulumi.com/project-slug: ediri/lego/dev
+spec:
+  owner: infrastructure
+  domain: gitops-platform
+  type: service
+  lifecycle: experimental
+  system: gitops-system
