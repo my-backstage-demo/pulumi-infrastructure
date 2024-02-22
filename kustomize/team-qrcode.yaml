@@ -1,0 +1,74 @@
+apiVersion: pulumi.com/v1
+kind: Program
+metadata:
+  name: team-qrcode
+program:
+  resources:
+    bucket:
+      type: aws:s3:BucketV2
+    bucketOwnershipControls:
+      type: aws:s3:BucketOwnershipControls
+      properties:
+        bucket: ${bucket.id}
+        rule:
+          objectOwnership: BucketOwnerPreferred
+    bucketPublicAccessBlock:
+      type: aws:s3:BucketPublicAccessBlock
+      properties:
+        bucket: ${bucket.id}
+        blockPublicAcls: false
+        blockPublicPolicy: false
+        ignorePublicAcls: false
+        restrictPublicBuckets: false
+    bucketACL:
+      type: aws:s3:BucketAclV2
+      properties:
+        bucket: ${bucket.id}
+        acl: public-read
+      options:
+        dependsOn:
+        - ${bucketOwnershipControls}
+        - ${bucketPublicAccessBlock}
+    webSiteContent:
+      type: aws:s3:BucketWebsiteConfigurationV2
+      properties:
+        bucket: ${bucket.id}
+        indexDocument:
+          suffix: index.html
+    index.html:
+      type: aws:s3:BucketObject
+      options:
+        dependsOn:
+        - ${webSiteContent}
+        - ${bucketACL}
+      properties:
+        bucket: ${bucket.id}
+        content: |
+          <h4>not so big header </h4>
+        contentType: text/html
+        acl: public-read
+  outputs:
+    url: http://${webSiteContent.websiteEndpoint}
+---
+apiVersion: pulumi.com/v1
+kind: Stack
+metadata:
+  name: team-qrcode
+spec:
+  stack: ediri/team-qrcode/dev
+  envRefs:
+    AWS_ACCESS_KEY_ID:
+      type: Secret
+      secret:
+        name: secret
+        key: AWS_ACCESS_KEY_ID
+    AWS_SECRET_ACCESS_KEY:
+      type: Secret
+      secret:
+        name: secret
+        key: AWS_SECRET_ACCESS_KEY
+  programRef:
+    name: team-qrcode
+  destroyOnFinalize: false
+  config:
+    aws:region: eu-central-1
