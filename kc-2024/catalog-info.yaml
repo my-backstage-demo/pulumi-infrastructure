@@ -1,0 +1,13 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: kc-2024
+  description: Stack for kc-2024
+  annotations:
+    pulumi.com/project-slug: ediri/kc-2024/dev
+spec:
+  owner: infrastructure
+  domain: gitops-platform
+  type: service
+  lifecycle: experimental
+  system: gitops-system
